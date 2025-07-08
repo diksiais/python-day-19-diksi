@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Turtle-like Drawing</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="500" height="500"></canvas>
+
+<script>
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+let x = canvas.width / 2;
+let y = canvas.height / 2;
+let angle = 0;
+
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(x, y);
+
+function move(distance) {
+  const rad = angle * (Math.PI / 180);
+  const newX = x + distance * Math.cos(rad);
+  const newY = y + distance * Math.sin(rad);
+  
+  ctx.lineTo(newX, newY);
+  ctx.stroke();
+  
+  x = newX;
+  y = newY;
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  x = canvas.width / 2;
+  y = canvas.height / 2;
+  angle = 0;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'w') {
+    move(10);
+  } else if (event.key === 's') {
+    move(-10);
+  } else if (event.key === 'a') {
+    angle -= 10;
+  } else if (event.key === 'd') {
+    angle += 10;
+  } else if (event.key === 'c') {
+    clearCanvas();
+  }
+});
+</script>
+
+</body>
+</html>
